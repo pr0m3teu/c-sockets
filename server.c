@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <sys/socket.h>
 #include <errno.h>
 #include <unistd.h>
@@ -30,6 +31,12 @@ int main(void)
     if (bind(serverfd,  (const struct sockaddr *) &address, sizeof(address)) < 0)
     {
         perror("ERROR in bind");
+        exit(1);
+    }
+    
+    if (listen(serverfd, 10) < 0)
+    {
+        perror("ERROR in listen");
         exit(1);
     }
 
