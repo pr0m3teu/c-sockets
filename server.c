@@ -24,7 +24,7 @@ int main(void)
 
     if(inet_pton(AF_INET, "127.0.0.1", &address.sin_addr) != 1)
     {
-        perror("ERROR in inet_aton");
+        perror("ERROR in inet_pton");
         exit(1);
     }
     
@@ -39,6 +39,7 @@ int main(void)
         perror("ERROR in listen");
         exit(1);
     }
+    while(1) {};
 
     return 0;
 }
