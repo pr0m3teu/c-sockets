@@ -7,6 +7,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "common.h"
+
 int main(void)
 {
     printf("Hello World!\n");
@@ -39,7 +41,28 @@ int main(void)
         perror("ERROR in listen");
         exit(1);
     }
-    while(1) {};
+
+    int addr_len = sizeof(address);
+    int new_socket = accept(serverfd, (struct sockaddr*)&address, (socklen_t*)&addr_len);
+    if (new_socket < 0)
+    {
+        perror("ERROR in accept");
+        return 1;
+    }
+
+    char buff[1024];
+    int num_bites = read(new_socket, buff, 1024); 
+    if (num_bites < 0)
+    {
+        perror("ERROR in read");
+        return 1;
+    }
+    printf("%d\n", num_bites);
+    
+    struct Pos *new_pos =  (struct Pos *)buff;
+    printf("%d, %d\n", new_pos->x, new_pos->y);
+    
+    close(serverfd);
 
     return 0;
 }

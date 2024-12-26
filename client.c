@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include "common.h"
 
 int main(void)
 {
@@ -32,6 +33,13 @@ int main(void)
     }
     printf("Connected to server!\n");
 
+    // char msg[] = "Hello from client!\n";
+    struct Pos pos = {10, 20};
+//    void *msg = &pos;
+   // printf("%ld\n", sizeof(msg));
+    
+    send(client_fd, &pos, sizeof(pos), 0);
+    close(client_fd);
     return 0;
 }
 
